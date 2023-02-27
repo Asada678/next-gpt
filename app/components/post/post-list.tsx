@@ -2,11 +2,15 @@ import { notFound } from "next/navigation";
 import { createClient } from "../../../utils/supabase-server";
 import PostItem from "./post-item";
 
-export default async function PostList() {
+const getPosts = async () => {
   const supabase = createClient();
+  const { data } = await supabase.from("posts").select().order("created_at", { ascending: true });
 
-  const { data: postsData } = await supabase.from("posts").select().order("created_at", { ascending: true });
+  return data;
+};
 
+export default async function PostList() {
+  const postsData = await getPosts();
   if (!postsData) return notFound();
 
   return (
