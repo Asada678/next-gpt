@@ -8,6 +8,7 @@ export default function Page() {
   return (
     <div className="h-full">
       <Suspense fallback={<Loading />}>
+        {/* @ts-expect-error Server Component */}
         <PostList />
       </Suspense>
       <PostNew />
